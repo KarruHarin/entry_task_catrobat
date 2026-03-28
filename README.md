@@ -1,10 +1,9 @@
-# Entry Task — Procedural Terrain Generator
-
+# Entry Task — Procedural Perlin noise map generator
 ## Overview
 
-For the entry task, I built a deterministic procedural terrain generator using Perlin noise with fractional Brownian motion (fBm).
+For the entry task, I built a deterministic procedural Perlin noise map generator using fractional Brownian motion (fBm).
 
-The focus was not just generating terrain, but ensuring that the system is fully seed-driven — meaning the same inputs always produce the exact same output. This is essential for synchronized environments across devices.
+This map represents terrain structure and serves as the foundation for generating full environments. The system is fully seed-driven, ensuring identical outputs across devices.
 
 ---
 
