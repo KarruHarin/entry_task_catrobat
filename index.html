@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Terrain Generator</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <h1>Terrain Generator</h1>
+  <p class="subtitle">Click on Generate Map after changing inputs to view the modified map</p>
+
+  <div class="layout">
+
+    <aside>
+      <div class="panel">
+        <div class="panel-title">Parameters</div>
+
+        <div class="ctrl">
+          <div class="ctrl-label">Seed <span id="seedVal">42</span></div>
+          <div class="seed-row">
+            <input type="number" id="seed" value="42" min="0" max="999999">
+            <button onclick="randomSeed()">Random</button>
+          </div>
+        </div>
+
+        <div class="ctrl">
+          <div class="ctrl-label">Map size <span id="sizeVal">64 × 64</span></div>
+          <input type="range" id="mapSize" min="16" max="128" step="16" value="64" oninput="updateLabels()">
+        </div>
+
+        <div class="ctrl">
+          <div class="ctrl-label">Scale <span id="scaleVal">80</span></div>
+          <input type="range" id="scale" min="10" max="300" step="5" value="80" oninput="updateLabels()">
+        </div>
+
+        <div class="ctrl">
+          <div class="ctrl-label">Octaves <span id="octavesVal">5</span></div>
+          <input type="range" id="octaves" min="1" max="10" step="1" value="5" oninput="updateLabels()">
+        </div>
+
+        <div class="ctrl">
+          <div class="ctrl-label">Persistence <span id="persistVal">0.50</span></div>
+          <input type="range" id="persistence" min="0.1" max="0.9" step="0.05" value="0.5" oninput="updateLabels()">
+        </div>
+
+        <div class="ctrl">
+          <div class="ctrl-label">Lacunarity <span id="lacuVal">2.00</span></div>
+          <input type="range" id="lacunarity" min="1.2" max="4.0" step="0.1" value="2.0" oninput="updateLabels()">
+        </div>
+
+        <div class="ctrl" style="margin-top:10px">
+          <label class="toggle-row">
+            <input type="checkbox" id="colourMode" onchange="redraw()">
+            <span>Colour regions</span>
+          </label>
+        </div>
+
+        <button id="gen-btn" onclick="generate()">Generate Map</button>
+        <button id="export-btn" onclick="exportPNG()">Export PNG</button>
+      </div>
+
+      <div class="panel" id="regionsPanel" style="display:none">
+        <div class="panel-title">Regions</div>
+        <div id="tileList"></div>
+      </div>
+    </aside>
+
+    <div>
+      <div class="canvas-wrap">
+        <div class="canvas-header">
+          <strong>Map Output</strong>
+          <span id="canvasMeta">—</span>
+        </div>
+        <canvas id="mapCanvas" width="256" height="256"></canvas>
+        <div id="statsBar"><span>Waiting for generation…</span></div>
+      </div>
+    </div>
+
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
