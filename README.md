@@ -5,6 +5,8 @@ For the entry task, I built a deterministic procedural Perlin noise map generato
 
 This map represents terrain structure and serves as the foundation for generating full environments. The system is fully seed-driven, ensuring identical outputs across devices.
 demo website : https://karruharin.github.io/entry_task_catrobat/
+
+
 demo video : https://youtu.be/1HmSxF9DsdM
 ---
 
