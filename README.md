@@ -2,97 +2,85 @@
 
 ## Overview
 
-For the entry task, I implemented a seed-based procedural terrain generator using Perlin noise with fractional Brownian motion (fBm).
+For the entry task, I built a deterministic procedural terrain generator using Perlin noise with fractional Brownian motion (fBm).
 
-The goal was to build a deterministic, seed-driven system that produces identical environments across devices — which is the core requirement for synchronized AR ecosystems.
-
-For a more complete system with coral simulation and ecosystem behavior, see:
-👉 https://github.com/KarruHarin/Marine_Map_Generator
+The focus was not just generating terrain, but ensuring that the system is fully seed-driven — meaning the same inputs always produce the exact same output. This is essential for synchronized environments across devices.
 
 ---
 
-## Core Concepts
+## How the System Works
 
-### Perlin Noise — Terrain Backbone
+At its core, the terrain is generated using Perlin noise, which produces smooth and continuous variation. Instead of random, disconnected values, nearby points are related — which naturally results in terrain that looks structured rather than chaotic.
 
-Perlin noise is a gradient-based noise function that produces smooth, continuous variation, unlike random noise which is chaotic.
+On top of this, fBm is used to layer multiple levels of detail:
+- large-scale structure defines the overall shape (deep vs shallow regions)  
+- mid-scale variation introduces ridges and formations  
+- fine detail adds surface complexity  
 
-This allows generation of natural terrain features such as:
-- gradual depth changes  
-- reef slopes  
-- ocean basins  
-
-The noise value at each point is mapped to terrain types like sand, coral zones, or deep water.
+The result is terrain that has both global structure and local detail, similar to real marine environments.
 
 ---
 
-### Scale — Feature Size
+## Key Controls
 
-Controls how zoomed in or out the terrain is:
-- Low scale → dense, detailed terrain  
-- High scale → large, smooth regions  
+Rather than treating parameters as isolated values, they act together to define the character of the terrain:
 
-This parameter defines whether the terrain feels like a reef or open ocean.
+- **Scale** controls how large or small features appear  
+- **Octaves** define how much detail is layered into the terrain  
+- **Persistence** controls how strong higher-frequency details are  
+- **Lacunarity** controls how quickly detail scales between layers  
 
----
-
-### Octaves — Detail Layers
-
-Multiple layers of noise are combined:
-- Low frequency → large structures  
-- High frequency → fine details  
-
-More octaves increase realism but also computational cost.
+By adjusting these, the same generator can produce very different environments — from smooth seabeds to highly complex reef structures.
 
 ---
 
-### Persistence — Detail Strength
+## Determinism (Seed-Based Generation)
 
-Controls how much each octave contributes:
-- High → rough, chaotic terrain  
-- Low → smooth terrain  
+The entire system is driven by a seed value.
 
-Moderate values (~0.5) give realistic marine environments.
+Given the same seed and parameters:
+- the terrain is identical every time  
+- results are consistent across devices  
 
----
-
-### Lacunarity — Frequency Growth
-
-Controls how quickly detail increases per octave.
-
-Together with persistence, it defines the “character” of the terrain — smooth vs jagged.
+This ensures that multiple users can experience the same generated environment without storing or transmitting large datasets.
 
 ---
 
-### Seed — Determinism
+## How This Scales Further
 
-The seed ensures reproducibility.
+This entry task is a 2D representation of a much larger system.
 
-Same seed + same parameters → identical terrain every time.
+The same foundation can be extended into:
 
-This is critical for synchronized multi-device environments.
+- **3D terrain generation**  
+  Extending noise into 3D enables caves, reef walls, and volumetric structures.
+
+- **Intelligent placement**  
+  The terrain can act as a probability field for placing elements like coral, based on conditions such as depth or slope.
+
+- **Ecosystem behavior**  
+  A simulation layer can evolve the environment over time — growth, competition, and decay — while remaining deterministic.
+
+- **Streaming and LOD**  
+  Terrain can be generated in chunks around the user, allowing large-scale environments to run efficiently.
 
 ---
 
-## How This Scales to the Full Project
+## Further Work
 
-This 2D generator is the mathematical foundation for the full system.
+Building on this foundation, I developed a more complete proof of concept that includes:
+- terrain generation inside Unity  
+- clustered coral placement  
+- rule-based ecosystem simulation  
 
-It extends into:
-
-- **3D terrain generation** — caves, reef walls, volumetric structures  
-- **Intelligent placement** — coral spawning based on terrain conditions  
-- **Ecosystem simulation** — growth, competition, decay over time  
-- **LOD & streaming** — scalable generation for AR environments  
-- **ML integration (optional)** — parameter tuning from real-world data  
+Repository:
+https://github.com/KarruHarin/Marine_Map_Generator
 
 ---
 
 ## Summary
 
-This entry task demonstrates:
-- Deterministic procedural generation  
-- Realistic terrain formation using fBm  
-- A scalable foundation for ecosystem simulation  
-
-The same system can be extended directly into a full 3D, evolving coral reef environment.
+This task demonstrates a deterministic procedural system that:
+- generates structured terrain using fBm  
+- is fully reproducible via seed control  
+- scales naturally into a full ecosystem simulation pipeline  
